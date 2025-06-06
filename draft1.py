@@ -26,42 +26,48 @@ print("-------------------------------------------\n")
 # ------- Code -------
 
 class SkillCheck:
+    command_input = []
+
     def __init__(self, name):
         self.name= name
 
     def proficiency(self, ability_score):
             print("\n", section_header + self.name + section_header)
-            self = subprocess.run(ability_score)
+            self = subprocess.run(ability_score.split())
             print(section_footer)
             return self
 
-    def sleight_of_hand(input):
-        sudo_access = pexpect.spawn('sudo echo OK')
+    def inspiration(input, ability_score):
+        sudo_access = pexpect.spawn(ability_score)
         sudo_access.expect('password')
-        timeout = 500
+        timeout = 50
         sudo_access.sendline('password')
         print(sudo_access.read())
                
 
     
 def basicScan():
+
+# ------- Inspiration -------
+    etcshadow = SkillCheck("Home Directory Health")
+    etcshadow.inspiration('sudo cat /etc/shadow')
+
     poncho_bot = SkillCheck("Privilege Audit")
-    poncho_bot.sleight_of_hand()
+    poncho_bot.inspiration('sudo cat /etc/sudoers')
+
+# ------- Proficiency -------
 
     ip_addr_bot = SkillCheck("IP")
-    ip_addr_bot.proficiency(['/usr/bin/ip', 'addr'])
+    ip_addr_bot.proficiency('ip addr')
 
     online_users_bot = SkillCheck("Online Users")
-    online_users_bot.proficiency(['who'])
+    online_users_bot.proficiency('who')
 
     passwd_bot = SkillCheck("/etc/passwd")
-    passwd_bot.proficiency(['cat', '/etc/passwd'])
+    passwd_bot.proficiency('cat /etc/passwd')
 
-    etcshadow = SkillCheck("Home Directory Health")
-    etcshadow.proficiency(['sudo', 'cat', '/etc/shadow'])
-
-
-
+    uname_bot = SkillCheck("Host System")
+    uname_bot.proficiency('uname -a')
 
 
 # ------- Execution -------
