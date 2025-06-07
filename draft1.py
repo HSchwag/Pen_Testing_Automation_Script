@@ -10,7 +10,6 @@
 # Created by Hunter Schwager and Kyle McCarthy.
 
 import subprocess
-import getpass
 import pexpect
 
 # ------- QOL -------
@@ -25,6 +24,15 @@ print("The following system scan shows no signs of system degradation or comprom
 print("-------------------------------------------\n")
 # ------- Code -------
 
+def sudo_command(command):
+    sudo_access = pexpect.spawn(command)
+    sudo_access.expect('for', timeout=1000)
+    sudo_access.sendline('password')
+    sudo_access.expect(pexpect.EOF)
+    output = sudo_access.before.decode('utf-8')
+
+    return output
+       
 class SkillCheck:
     command_input = []
 
@@ -38,22 +46,35 @@ class SkillCheck:
             return self
 
     def inspiration(input, ability_score):
-        sudo_access = pexpect.spawn(ability_score)
-        sudo_access.expect('password')
-        timeout = 50
-        sudo_access.sendline('password')
-        print(sudo_access.read())
-               
+        sudo_command(ability_score)
 
-    
+    def investigation(self, directory, search):
+        print("\n", section_header + self.name + section_header)
+        command = 'sudo find ' + directory + ' -type f -iname ' + search
+        files_to_search = sudo_command(command)
+        print(files_to_search)
+
+        '''
+        for r in files_to_search:
+            print("\n", section_header + r + section_header)
+            read_file = subprocess.run(['cat', r])
+            timeout = 100
+            print(read_file)
+            print(section_footer)
+        '''
+
 def basicScan():
 
 # ------- Inspiration -------
-    etcshadow = SkillCheck("Home Directory Health")
-    etcshadow.inspiration('sudo cat /etc/shadow')
+
+    etcshadow_bot = SkillCheck("Home Directory Health")
+    etcshadow_bot.inspiration('sudo cat /etc/shadow')
 
     poncho_bot = SkillCheck("Privilege Audit")
     poncho_bot.inspiration('sudo cat /etc/sudoers')
+
+    cron_bot = SkillCheck("Home Folder | .txt")
+    cron_bot.investigation('/home/', '*.txt') 
 
 # ------- Proficiency -------
 
@@ -66,8 +87,12 @@ def basicScan():
     passwd_bot = SkillCheck("/etc/passwd")
     passwd_bot.proficiency('cat /etc/passwd')
 
-    uname_bot = SkillCheck("Host System")
-    uname_bot.proficiency('uname -a')
+    host_bot = SkillCheck("Host System")
+    host_bot.proficiency('uname -a')
+
+    group_bot = SkillCheck("Groups")
+    group_bot.proficiency("cat /etc/group")
+
 
 
 # ------- Execution -------
