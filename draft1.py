@@ -150,6 +150,9 @@ def one_mail():
     )
 
 def combine_logs(directory):
+
+    with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as file:
+        file.write('===========================================================')
     
     subprocess.run(['mkdir', 'logs'])
     
