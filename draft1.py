@@ -157,7 +157,7 @@ def combine_logs(directory):
     subprocess.run(['mkdir', 'logs'])
     
     for log in directory:
-        subprocess.run(['cat', log, '>> API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf'])
+        subprocess.run(['cat ./' + str(log), '>> API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf'])
 
 # ------- Execution -------
 
