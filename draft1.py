@@ -55,7 +55,6 @@ def steg_command(to_be_hidden, to_hide):
     sudo_access.sendline('password')
     sudo_access.expect(':')
     sudo_access.sendline('carneasada')
-    sudo_access.expect(pexpect.EOF)
 
 # ------- Command Class -------
 
