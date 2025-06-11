@@ -137,7 +137,7 @@ def secret_ingredient():
     mosquito_in_amber()
 
     steg_command('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'steg.png')
-    steg_command(elbow_grease.txt, 'dfstd.png')
+    steg_command('elbow_grease.txt', 'dfstd.png')
 
 def one_mail():
     send_email(
