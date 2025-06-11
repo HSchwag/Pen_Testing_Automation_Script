@@ -149,7 +149,7 @@ def one_mail():
         './dfstd.jpg'
     )
 
-def combine_logs(directory);
+def combine_logs(directory):
     
     sudo_command('mkdir logs')
     
