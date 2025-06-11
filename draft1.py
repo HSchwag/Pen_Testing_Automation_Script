@@ -62,13 +62,18 @@ def mosquito_in_amber():
     sudo_command('sudo chmod +x steg.jpg && chmod +x dfstd.jpg', False)
 
 def steg_command(to_be_hidden, to_hide):
-    sudo_access = pexpect.spawn('sudo steghide embed -cf ' + to_hide + ' -ef ' + to_be_hidden)
+    sudo_access = pexpect.spawn(f'sudo steghide embed -cf {to_hide} -ef {to_be_hidden}')
+
     sudo_access.expect('password', timeout=100)
     sudo_access.sendline('password')
-    sudo_access.expect('pass', timeout=100)
-    sudo_access.expect(pexpect.EOF)
+
+    sudo_access.expect('Enter passphrase:', timeout=100)
     sudo_access.sendline('carneasada')
-    sudo_access.expect(pexpect.EOF)    
+
+    sudo_access.expect('Repeat passphrase:', timeout=100)
+    sudo_access.sendline('carneasada')
+
+    sudo_access.expect(pexpect.EOF)
 
 # ------- Command Class -------
 
