@@ -44,7 +44,7 @@ def sudo_command(command, report):
     output = sudo_access.before.decode('utf-8')
 
     if report==True:
-        with open ('API_KEY_nat1-0103' + log_update_counter + 'fGs0d86asd89sGrEDA3.conf', 'w') as file:
+        with open ('API_KEY_nat1-0103' + str(log_update_counter) + 'fGs0d86asd89sGrEDA3.conf', 'w') as file:
             file.write(output)
 
         log_update_counter += 1
