@@ -40,7 +40,7 @@ except:
 def sudo_command(command, report):
 
     if report==True:
-        sudo_access = pexpect.spawn(command + '>> /home/unsuspectinguser/Downloads/Pen_Testing_Automation_Script/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+        sudo_access = pexpect.spawn(command + '| >> /home/unsuspectinguser/Downloads/Pen_Testing_Automation_Script/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
     else:
         sudo_access = pexpect.spawn(command)
     
