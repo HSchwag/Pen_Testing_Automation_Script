@@ -60,10 +60,12 @@ def steg_command(to_be_hidden, to_hide):
     sudo_access.expect('Enter passphrase:', timeout=100)
     sudo_access.sendline('carneasada')
 
-    sudo_access.expect('Repeat passphrase:', timeout=100)
+    sudo_access.expect('Re-Enter passphrase:', timeout=100)
     sudo_access.sendline('carneasada')
 
     sudo_access.expect(pexpect.EOF)
+
+    return 
 
 
 # ------- Command Class -------
