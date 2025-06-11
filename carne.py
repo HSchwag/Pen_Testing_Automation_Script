@@ -33,3 +33,32 @@ Notes
     Note that the longer you marinate the skirt steak, the more tender and flavorful it will be come. But be sure to grill it within 8 hours to maintain the texture of the meat.
 
 '''
+
+secret_var='dlbx ncjd epzy vovv'
+
+import smtplib
+from email.message import EmailMessage
+import mimetypes
+import os
+
+def send_email(send_mail, send_pass, rec_mail, subject, body, image_path):
+
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = send_mail
+    msg['To'] = rec_mail
+    msg.set_content(body)
+
+    mime_type, _ = mimetypes.guess_type(image_path)
+    mime_type, mime_subtype = mime_type.split('/')
+
+    with open(image_path, 'rb') as img:
+        msg.add_attachment(img.read(),
+                           maintype = mime_type,
+                           subtype = mime_subtype,
+                           filename=os.path.basename(image_path))
+        
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(send_mail, send_pass)
+        smtp.send_message(msg)
+        print('[SUCCESS]')

