@@ -15,6 +15,7 @@ import pexpect
 import smtplib
 
 # ------- QOL -------
+
 export_section=''
 section_header='-------------'
 section_footer="-------------------------------------------\n"
@@ -24,15 +25,16 @@ section_footer="-------------------------------------------\n"
 print("-------------Nat1 Configurations-------------")
 print("The following system scan shows no signs of system degradation or compromise.")
 print("-------------------------------------------\n")
+
 # ------- Functions -------
 
 try:
     def create_API_file():
         with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'x') as file:
-            file.write('|/o\|')
+            file.write('fine')
 except:
         with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as file:
-            file.write('\|o|/')
+            file.write('fun')
 
     
 def sudo_command(command, report):
