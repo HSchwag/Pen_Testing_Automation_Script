@@ -158,7 +158,7 @@ def combine_logs(directory):
         file.write('===========================================================')
     
 
-for log in os.listdir(directory):
+    for log in os.listdir(directory):
         if filename.startswith('API_KEY_nat1'):
             with open('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'a') as file:
                 file.write(log)
