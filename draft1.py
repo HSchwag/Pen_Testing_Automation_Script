@@ -151,13 +151,16 @@ def one_mail():
 
 def combine_logs(directory):
 
-    with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as file:
-        file.write('===========================================================')
-    
     subprocess.run(['mkdir', 'logs'])
     
-    for log in directory:
-        subprocess.run(['cat ./' + str(log), '>> API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf'])
+    with open('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as file:
+        file.write('===========================================================')
+    
+
+for log in os.listdir(directory):
+        if filename.startswith('API_KEY_nat1'):
+            with open('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'a') as file:
+                file.write(log)
 
 # ------- Execution -------
 
