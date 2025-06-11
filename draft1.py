@@ -68,10 +68,10 @@ def steg_command(to_be_hidden, to_hide):
     sudo_access.sendline('password')
 
     sudo_access.expect('Enter passphrase:', timeout=100)
-    print(carne_debug=sudo_access.sendline('carneasada'))
+    print(sudo_access.sendline('carneasada'))
     
     sudo_access.expect('Re-Enter passphrase:', timeout=100)
-    print(carne_dos_debug=sudo_access.sendline('carneasada'))
+    print(sudo_access.sendline('carneasada'))
 
     sudo_access.expect(pexpect.EOF)
 
