@@ -136,7 +136,7 @@ def basicScan():
 def secret_ingredient():
     mosquito_in_amber()
 
-    steg_command('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'steg.png')
+    steg_command('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'steg.png')
     steg_command(asada, 'dfstd.png')
 
 def one_mail():
