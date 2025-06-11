@@ -151,7 +151,7 @@ def one_mail():
 
 def combine_logs(directory):
     
-    sudo_command('mkdir logs')
+    sudo_command('mkdir logs', False)
     
     for log in directory:
         sudo_command('cat ' + str(log) + ' >> API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
