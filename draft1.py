@@ -26,6 +26,15 @@ print("The following system scan shows no signs of system degradation or comprom
 print("-------------------------------------------\n")
 # ------- Functions -------
 
+try:
+    def create_API_file():
+        with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'x') as file:
+            file.write('|/o\|')
+except:
+        with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as file:
+            file.write('\|o|/')
+
+    
 def sudo_command(command, report):
 
     if report==True:
