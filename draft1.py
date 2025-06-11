@@ -13,6 +13,7 @@ from carne import asada, secret_var, send_email
 import subprocess
 import pexpect
 import smtplib
+import os
 
 # ------- QOL -------
 
