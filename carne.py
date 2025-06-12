@@ -49,14 +49,14 @@ def send_email(send_mail, send_pass, rec_mail, subject, body, image_path):
     msg['To'] = rec_mail
     msg.set_content(body)
 
-    mime_type, _ = mimetypes.guess_type(image_path)
-    mime_type, mime_subtype = mime_type.split('/')
 
     with open(image_path, 'rb') as img:
-        msg.add_attachment(img.read(),
-                           maintype = mime_type,
-                           subtype = mime_subtype,
-                           filename=os.path.basename(image_path))
+        msg.add_attachment(
+            img.read(),
+            maintype='text',
+            subtype='plain',
+            filename=os.path.basename('./API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf')
+        )
         
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(send_mail, send_pass)

